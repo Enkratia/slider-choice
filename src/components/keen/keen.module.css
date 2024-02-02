@@ -1,0 +1,25 @@
+.pagination {
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  width: 100%;
+}
+
+.paginationBtn {
+  border-radius: 4px;
+  border: 1px solid black;
+  width: 20px;
+  height: 12px;
+  background-color: aqua;
+}
+
+.paginationBtnActive {
+  background-color: rgb(15, 71, 71);
+}
+
+.paginationBtn:hover {
+  background-color: rgb(15, 71, 71);
+  cursor: pointer;
+  transition: all 0.3s;
+}

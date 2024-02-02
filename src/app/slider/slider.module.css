@@ -1,0 +1,14 @@
+.root {
+  padding-block: rem(120);
+  min-height: 80wh;
+}
+
+.container {
+  margin-inline: auto;
+  max-width: 1024px;
+}
+
+.title {
+  margin-bottom: rem(60);
+  text-align: center;
+}
