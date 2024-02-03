@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+
 import useEmblaCarousel from "embla-carousel-react";
-import EmblaClassNames from "embla-carousel-class-names";
 
 import { Product } from "../product";
 
@@ -11,34 +11,32 @@ import s from "./embla.module.css";
 type SliderBlockProps = {
   products: any;
   limit: number;
+  setNextPage: () => void;
+  page: number;
 };
 
-export const Embla: React.FC<SliderBlockProps> = ({ products, limit }) => {
-  const plugins = [EmblaClassNames()];
-  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true }, plugins);
-  const [active, setActive] = React.useState(0);
+export const Embla: React.FC<SliderBlockProps> = ({ products, limit, setNextPage, page }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: false,
+    inViewThreshold: 0.95,
+  });
 
-  const scrollTo = (n: number) => {
-    emblaApi?.scrollTo(n);
-    setActive(n);
+  const triggerFetchIfNeeded = () => {
+    const canScrollNext = emblaApi?.canScrollNext();
+
+    console.log("page", page);
+
+    if (!canScrollNext) {
+      setNextPage();
+    }
   };
 
-  // const dotsCount = limit - 2 + 1;
-
-  // console.log(emblaApi?.slidesInView().length);
-  // console.log(EmblaClassNames);
-
-  const [dotsCount, setDotsCount] = React.useState(0);
-
   React.useEffect(() => {
-    // console.log(emblaApi?.containerNode()?.querySelectorAll(".is-in-view"));
-    // const slidesPerView = emblaApi?.containerNode()?.querySelectorAll(".is-in-view")?.length;
-    // if (slidesPerView && slidesPerView !== dotsCount) {
-    //   setDotsCount(limit - slidesPerView - 1 + 1);
-    // }
-    console.log(emblaApi?.scrollSnapList());
-  });
-  console.log(emblaApi?.rootNode()?.querySelectorAll("div >"));
+    if (!emblaApi) return;
+
+    emblaApi.on("select", triggerFetchIfNeeded);
+  }, [emblaApi]);
 
   return (
     <div className={s.root} ref={emblaRef}>
@@ -48,17 +46,8 @@ export const Embla: React.FC<SliderBlockProps> = ({ products, limit }) => {
             <Product data={product} />
           </div>
         ))}
-      </div>
 
-      <div className={s.pagination}>
-        {[...Array(dotsCount)].map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => scrollTo(idx)}
-            className={`${s.paginationBtn} ${
-              idx === active ? s.paginationBtnActive : ""
-            }`}></button>
-        ))}
+        <div className={s.spinner}></div>
       </div>
     </div>
   );

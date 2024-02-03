@@ -22,6 +22,13 @@ export const Keen: React.FC<KeenProps> = ({ products, limit }) => {
       perView: 4,
       spacing: 30,
     },
+    breakpoints: {
+      "(max-width: 1024px)": {
+        slides: {
+          perView: 2,
+        },
+      },
+    },
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
     },

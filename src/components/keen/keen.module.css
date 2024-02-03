@@ -16,10 +16,10 @@
 
 .paginationBtnActive {
   background-color: rgb(15, 71, 71);
+  transition: background-color 0.3s 0.1s;
 }
 
 .paginationBtn:hover {
   background-color: rgb(15, 71, 71);
   cursor: pointer;
-  transition: all 0.3s;
 }
