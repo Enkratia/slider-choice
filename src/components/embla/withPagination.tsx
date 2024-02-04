@@ -6,7 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 
 import { Product } from "../product";
 
-import s from "./embla.module.css";
+import s from "./embla.module.scss";
 
 type SliderBlockProps = {
   products: any;
@@ -19,7 +19,6 @@ export const Embla: React.FC<SliderBlockProps> = ({ products, limit }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: isLoop,
-    inViewThreshold: 0.95,
   });
 
   const [activeSlide, setActiveSlide] = React.useState(0);
